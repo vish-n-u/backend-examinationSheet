@@ -67,7 +67,9 @@ exports.getAllQuestionPaperOfStudent= async(req,res)=>{
         // Assuming you have a Mongoose User model with 'questionPaperIds' and 'answerSheetIds' fields
         const userWithPopulatedFields = await User.findById(req.user._id)
           .populate('questionPaperIds')
-          .populate('answerSheetIds')
+          .populate({
+            path: 'answerSheetIds',
+            populate: { path: 'studentId' }})
           .exec();
       
         // Access the user object with populated fields
